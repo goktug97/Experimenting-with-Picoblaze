@@ -21,7 +21,7 @@ wire pb1_reset;
 cipher pb1_cipher (
   .address(pb1_address),
   .clk(clk),
-  instructions(pb1_instructions)
+  .instructions(pb1_instructions)
 );
 
 kcpsm3 picoblaze_1(
@@ -53,7 +53,7 @@ wire pb2_reset;
 random pb2_random (
   .address(pb2_address),
   .clk(clk),
-  instructions(pb2_instructions)
+  .instructions(pb2_instructions)
 );
 
 assign pb2_in_port = pb1_port_id ;
