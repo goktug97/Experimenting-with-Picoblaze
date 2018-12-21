@@ -56,6 +56,7 @@ random pb2_random (
   instructions(pb2_instructions)
 );
 
+assign pb2_in_port = pb1_port_id ;
 kcpsm3 picoblaze_2(
   .address(pb2_address),
   .instruction(pb2_instructions),
@@ -83,7 +84,7 @@ blk_mem_gen_v7_3 ram (
 
 // MUX 
 MUX mux (
-  .sel(pb1_port_id[4:3]),
+  .sel(pb1_port_id[1:0]),
   .in0(ram_output),
   .in1(pb2_port_id),
   .in2(pb2_out_port),

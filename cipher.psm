@@ -1,14 +1,14 @@
 default_jump loop 
 
 loop:
-    input sA, 11000000'b
+    input sA, 01000000'b
     test sA, FF
     jump nz, main 
     jump loop
 
 main:
-    input s0, 10000000'b
-    input s1, 01000000'b
+    input s0, 00000100'b
+    input s1, 10000000'b
     xor s0, s1
-    output s0, 00100001'b
+    output s0, 11000111'b
     jump loop

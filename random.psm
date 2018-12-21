@@ -15,7 +15,7 @@ main:
 
 loop:
   input sF, 00
-  TEST sF, 00100001'b
+  TEST sF, 11000111'b
   jump nz, main
   jump loop
 
