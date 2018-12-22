@@ -5,7 +5,8 @@ namereg s9, bit
 default_jump error_handler 
 
 ;random init
-load lfsr, 00110100'b
+;load lfsr, 00110100'b
+load lfsr, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
 main:
@@ -15,7 +16,8 @@ main:
 
 loop:
   input sF, 00
-  TEST sF, 11000111'b
+  ;TEST sF, 11000111'b
+  TEST sF, C7
   jump nz, main
   jump loop
 
@@ -39,12 +41,12 @@ random_stream:
   do_while_loop:
     sl0 bit
     add count, 01
-    compare count, 7'd
+    compare count, 07
     jump C, do_while_loop
   
   or lfsr, bit
   return
 
 error_handler:
-  load lfsr, 00110100'b
+  load lfsr, 34
   jump main
