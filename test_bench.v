@@ -3,15 +3,21 @@
 module vernam_tb ();
 
 reg clk;
+wire out;
 
 vernam vernam_module (
-  .clk(clk)
+  .clk(clk),
+  .out(out)
 );
 
 initial clk = 0;
 
 always begin
-  #10 clk = ~clk;
+  #5 clk = ~clk;
+end
+
+always begin
+  #10 $display(out);
 end
 
 endmodule
