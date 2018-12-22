@@ -10,7 +10,7 @@ wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
 wire [7:0] pb1_port_id;
 wire [7:0] pb1_out_port;
-wire [7:0] pb1_in_port;
+reg [7:0] pb1_in_port;
 wire pb1_write_strobe;
 wire pb1_read_strobe;
 wire pb1_interrupt;
@@ -84,14 +84,19 @@ blk_mem_gen_v7_3 ram (
 );
 
 // MUX 
+wire pb1_in_register
 MUX mux (
   .sel(pb1_port_id[1:0]),
   .in0(ram_output),
   .in1(pb2_port_id),
   .in2(pb2_out_port),
   .in3(8'b00000000), 
-  .out(pb1_in_port)
+  .out(pb1_in_register)
 );
+
+always @ (posedge clk) begin
+  pb1_in_port <= pb1_in_register;
+end
 
 // TODO: put D-FF into input and output of the mux.
 
