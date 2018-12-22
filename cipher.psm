@@ -1,5 +1,3 @@
-default_jump loop 
-
 loop:
     input sA, 40
     test sA, FF

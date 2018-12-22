@@ -1,40 +1,34 @@
-namereg sA, lfsr ;random stream
-namereg sB, count
-namereg sC, temp
-namereg s9, bit
-default_jump error_handler 
-
 ;random init
-;load lfsr, 00110100'b
-load lfsr, 34
+;load sA, 00110100'b
+load sA, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
 main:
-  load temp, lfsr
-  load bit, lfsr
+  load sC, sA
+  load s9, sA
 
-  sr0 temp
-  sr0 temp
-  xor bit, temp
-  sr0 temp
-  xor bit, temp
-  sr0 temp
-  xor bit, temp
-  and bit, 01
+  sr0 sC
+  sr0 sC
+  xor s9, sC
+  sr0 sC
+  xor s9, sC
+  sr0 sC
+  xor s9, sC
+  and s9, 01
   
-  sr0 lfsr
+  sr0 sA
   
-  load count, 00
+  load sB, 00
   
   do_while_loop:
-    sl0 bit
-    add count, 01
-    compare count, 07
+    sl0 s9
+    add sB, 01
+    compare sB, 07
     jump C, do_while_loop
   
-  or lfsr, bit
-  output lfsr, FF
-  load temp, temp
+  or sA, s9
+  output sA, FF
+  load sC, sC
   jump loop
 
 loop:
@@ -43,7 +37,3 @@ loop:
   TEST sF, C7
   jump nz, main
   jump loop
-
-error_handler:
-  load lfsr, 34
-  jump main
