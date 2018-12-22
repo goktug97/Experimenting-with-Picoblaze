@@ -1,7 +1,7 @@
 default_jump loop 
 
 loop:
-    input sA, 01000000'b
+    input sA, 40
     test sA, FF
     jump nz, main 
     test sA, FF
@@ -9,8 +9,8 @@ loop:
     jump loop
 
 main:
-    input s0, 00000100'b
-    input s1, 10000000'b
+    input s0, 04
+    input s1, 80
     xor s0, s1
-    output s0, 11000111'b
+    output s0, C7
     jump loop
