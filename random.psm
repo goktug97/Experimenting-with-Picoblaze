@@ -10,19 +10,6 @@ load lfsr, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
 main:
-  CALL random_stream
-  output lfsr, FF
-  load temp, temp
-  jump loop
-
-loop:
-  ;TEST sF, 11000111'b
-  input sF, FF
-  TEST sF, C7
-  jump nz, main
-  jump loop
-
-random_stream:
   load temp, lfsr
   load bit, lfsr
 
@@ -46,7 +33,16 @@ random_stream:
     jump C, do_while_loop
   
   or lfsr, bit
-  return
+  output lfsr, FF
+  load temp, temp
+  jump loop
+
+loop:
+  ;TEST sF, 11000111'b
+  input sF, FF
+  TEST sF, C7
+  jump nz, main
+  jump loop
 
 error_handler:
   load lfsr, 34
