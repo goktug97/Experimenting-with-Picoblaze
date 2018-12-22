@@ -9,7 +9,7 @@ wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
 wire [7:0] pb1_port_id;
 wire [7:0] pb1_out_port;
-reg [7:0] pb1_in_port;
+wire [7:0] pb1_in_port;
 wire pb1_write_strobe;
 wire pb1_read_strobe;
 wire pb1_interrupt;
@@ -191,7 +191,7 @@ endmodule
 
 module DFF_1 (
   input D,
-  output Q,
+  output reg Q,
   input set,
   input reset,
   input clk
@@ -206,7 +206,7 @@ endmodule
 
 module DFF_2 (
   input [7:0] D,
-  output [7:0] Q,
+  output reg [7:0] Q,
   input enable,
   input clk
 );
