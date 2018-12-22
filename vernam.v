@@ -179,8 +179,12 @@ module DFF_1 (
 );
 
 always @ (posedge clk) begin
-  if (reset) Q <= 0;
-  else if (set) Q <= D;
+  if (set) begin
+    Q <= D;
+  end 
+  if (reset) begin
+    Q <= 0;
+  end
 end
 
 endmodule
