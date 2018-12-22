@@ -4,6 +4,8 @@ loop:
     input sA, 01000000'b
     test sA, FF
     jump nz, main 
+    test sA, FF
+    jump nz, main 
     jump loop
 
 main:
