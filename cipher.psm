@@ -10,7 +10,11 @@ loop:
 
 main:
     input s0, 04
+    load sF, sF
+    load sF, sF
     input s1, 80
+    load sF, sF
+    load sF, sF
     xor s0, s1
     output s0, C7
     jump loop
