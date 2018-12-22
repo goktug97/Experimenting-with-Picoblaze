@@ -9,7 +9,7 @@ loop:
 
 isr:
   disable interrupt
-  input s0, 00
+  input s0, 00000010'b
   input s1, 10000010'b
   xor s0, s1
   output s0, 00001111'b
