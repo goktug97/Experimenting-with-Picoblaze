@@ -17,8 +17,10 @@ main:
   jump loop
 
 loop:
-  input sF, 00
   ;TEST sF, 11000111'b
+  input sF, 00
+  TEST sF, C7
+  jump nz, main
   TEST sF, C7
   jump nz, main
   jump loop
