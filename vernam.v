@@ -24,7 +24,7 @@ cipher pb1_cipher (
   .instruction(pb1_instructions)
 );
 
-kcpsm6 picoblaze_1(
+kcpsm3 picoblaze_1(
   .address(pb1_address),
   .instruction(pb1_instructions),
   .port_id(pb1_port_id),
@@ -57,7 +57,7 @@ random pb2_random (
 );
 
 assign pb2_in_port = pb1_port_id ;
-kcpsm6 picoblaze_2(
+kcpsm3 picoblaze_2(
   .address(pb2_address),
   .instruction(pb2_instructions),
   .port_id(pb2_port_id),
