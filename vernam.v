@@ -110,7 +110,7 @@ MUX mux (
 MUX mux (
   .sel(pb1_port_id[7:6]),
   .in0(ram_output),
-  .in1(pb2_port_id),
+  .in1({1,1,1,1,1,1,1,pb2_write_strobe}),
   .in2(pb2_out_port),
   .in3(8'b00000000), 
   .out(pb1_in_port)
