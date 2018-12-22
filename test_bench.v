@@ -10,6 +10,8 @@ vernam vernam_module (
 
 initial clk = 0;
 
-always clk = ~clk;
+always begin
+  #10 clk = ~clk;
+end
 
 endmodule
