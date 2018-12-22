@@ -109,20 +109,6 @@ DFF_1 pb1_interrupt_dff (
   .clk(clk)
 );
 
-// Picoblaze 2 Interrupt D Flip Flop
-wire pb2_interrupt_dff_d;
-wire pb2_interrupt_dff_q;
-wire pb2_interrupt_dff_set;
-wire pb2_interrupt_dff_reset;
-
-DFF_1 pb2_interrupt_dff (
-  .D(pb2_interrupt_dff_d),
-  .Q(pb2_interrupt_dff_q),
-  .set(pb2_interrupt_dff_set),
-  .reset(pb2_interrupt_dff_reset),
-  .clk(clk)
-);
-
 // Picoblaze 1 Output D Flip Flop
 wire [7:0] pb1_output_dff_d;
 wire [7:0] pb1_output_dff_q;
@@ -168,11 +154,6 @@ assign mux_input_0 = pb2_output_dff_q;
 assign mux_input_1 = ram_output;
 assign pb1_in_port = mux_output;
 assign mux_select = pb1_port_id[7];
-
-assign pb2_interrupt_dff_set = pb1_write_strobe & pb1_port_id[3];
-assign pb2_interrupt_dff_d = 1;
-assign pb2_interrupt = pb2_interrupt_dff_q;
-assign pb2_interrupt_dff_reset = pb2_interrupt_ack;
 
 endmodule
 
