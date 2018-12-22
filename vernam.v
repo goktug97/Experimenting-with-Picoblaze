@@ -97,7 +97,7 @@ MUX mux (
 
 // Picoblaze 1 Interrupt D Flip Flop
 wire pb1_interrupt_dff_d;
-reg pb1_interrupt_dff_q;
+wire pb1_interrupt_dff_q;
 wire pb1_interrupt_dff_set;
 wire pb1_interrupt_dff_reset;
 
@@ -105,13 +105,13 @@ DFF_1 pb1_interrupt_dff (
   .D(pb1_interrupt_dff_d),
   .Q(pb1_interrupt_dff_q),
   .set(pb1_interrupt_dff_set),
-  .reset(pb1_interrupt_dff_reset),
+  .reset(pb1_interrupt_ack),
   .clk(clk)
 );
 
 // Picoblaze 1 Output D Flip Flop
 wire [7:0] pb1_output_dff_d;
-reg [7:0] pb1_output_dff_q;
+wire [7:0] pb1_output_dff_q;
 wire pb1_output_dff_en;
 
 DFF_2 pb1_output_dff (
@@ -123,7 +123,7 @@ DFF_2 pb1_output_dff (
 
 // Picoblaze 2 Output D Flip Flop
 wire [7:0] pb2_output_dff_d;
-reg [7:0] pb2_output_dff_q;
+wire [7:0] pb2_output_dff_q;
 wire pb2_output_dff_en;
 
 DFF_2 pb2_output_dff (
