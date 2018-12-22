@@ -84,21 +84,28 @@ blk_mem_gen_v7_3 ram (
 );
 
 // MUX 
-wire pb1_in_register
+reg [7:0] in0_register;
+reg [7:0] in1_register;
+reg [7:0] in2_register;
+reg [7:0] in3_register;
+wire [7:0] pb1_in_register;
 MUX mux (
   .sel(pb1_port_id[1:0]),
-  .in0(ram_output),
-  .in1(pb2_port_id),
-  .in2(pb2_out_port),
-  .in3(8'b00000000), 
+  .in0(in0_register),
+  .in1(in1_register),
+  .in2(in2_register),
+  .in3(in3_register), 
   .out(pb1_in_register)
 );
 
 always @ (posedge clk) begin
   pb1_in_port <= pb1_in_register;
+  in0_register <= ram_output;
+  in1_register <= pb2_port_id;
+  in2_register <= pb2_out_port;
+  in3_register <= 8'b00000000;
 end
 
-// TODO: put D-FF into input and output of the mux.
 
 endmodule
 
