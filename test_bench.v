@@ -3,7 +3,7 @@
 module vernam_tb ();
 
 reg clk;
-wire out;
+wire [7:0] out;
 
 vernam vernam_module (
   .clk(clk),

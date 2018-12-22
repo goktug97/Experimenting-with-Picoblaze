@@ -2,7 +2,7 @@
 
 module vernam (
   input clk,
-  output out
+  output [7:0] out
 );
 
 // Picoblaze 1
