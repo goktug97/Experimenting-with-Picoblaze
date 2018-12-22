@@ -27,3 +27,6 @@ do_while_loop:
 
 or sA, s9
 output sA, 01
+
+loop:
+jump loop
