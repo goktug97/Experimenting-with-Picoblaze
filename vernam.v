@@ -10,7 +10,7 @@ wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
 wire [7:0] pb1_port_id;
 wire [7:0] pb1_out_port;
-wire [7:0] pb1_in_port;
+reg [7:0] pb1_in_port;
 wire pb1_write_strobe;
 wire pb1_read_strobe;
 wire pb1_interrupt;
@@ -96,27 +96,15 @@ reg [7:0] in1_register;
 reg [7:0] in2_register;
 reg [7:0] in3_register;
 
-/*
 MUX mux (
   .sel(pb1_port_id[7:6]),
   .in0(in0_register),
   .in1(in1_register),
   .in2(in2_register),
   .in3(in3_register), 
-  .out(pb1_in_port)
-);
-*/
-
-MUX mux (
-  .sel(pb1_port_id[7:6]),
-  .in0(ram_output),
-  .in1({1,1,1,1,1,1,1,pb2_write_strobe}),
-  .in2(pb2_out_port),
-  .in3(8'b00000000), 
-  .out(pb1_in_port)
+  .out(pb1_in_register)
 );
 
-/*
 always @ (posedge clk) begin
   pb1_in_port <= pb1_in_register;
   in0_register <= ram_output;
@@ -124,7 +112,6 @@ always @ (posedge clk) begin
   in2_register <= pb2_out_port;
   in3_register <= 8'b00000000;
 end
-*/
 
 
 endmodule
