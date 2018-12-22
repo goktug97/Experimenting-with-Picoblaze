@@ -1,7 +1,7 @@
 `timescale 1 ps / 1ps
 
 module vernam (
-  input clk,
+  input clk
 );
 
 // Picoblaze 1
@@ -172,7 +172,7 @@ assign mux_select = pb1_port_id[7];
 assign pb2_interrupt_dff_set = pb1_write_strobe & pb1_port_id[3];
 assign pb2_interrupt_dff_d = 1;
 assign pb2_interrupt = pb2_interrupt_dff_q;
-assign pb2_interrupt_dff_reset = interrupt_ack;
+assign pb2_interrupt_dff_reset = pb2_interrupt_ack;
 
 endmodule
 

@@ -5,7 +5,7 @@ module vernam_tb ();
 reg clk;
 
 vernam vernam_module (
-  .clk(clk),
+  .clk(clk)
 );
 
 initial clk = 0;
