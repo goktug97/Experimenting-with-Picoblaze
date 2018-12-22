@@ -3,44 +3,27 @@
 load sA, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
-startup:
-  CALL random_stream
-  jump loop
+load sC, sA
+load s9, sA
 
-loop:
-  jump loop
+sr0 sC
+sr0 sC
+xor s9, sC
+sr0 sC
+xor s9, sC
+sr0 sC
+xor s9, sC
+and s9, 01
 
-random_stream:
-  load sC, sA
-  load s9, sA
+sr0 sA
 
-  sr0 sC
-  sr0 sC
-  xor s9, sC
-  sr0 sC
-  xor s9, sC
-  sr0 sC
-  xor s9, sC
-  and s9, 01
-  
-  sr0 sA
-  
-  load sB, 00
-  
-  do_while_loop:
-    sl0 s9
-    add sB, 01
-    compare sB, 07
-    jump C, do_while_loop
-  
-  or sA, s9
-  output sA, 01
-  return
+load sB, 00
 
-isr:
-  disable interrupt
-  CALL random_stream
-  returni enable
+do_while_loop:
+  sl0 s9
+  add sB, 01
+  compare sB, 07
+  jump C, do_while_loop
 
-address 3FF
-jump isr
+or sA, s9
+output sA, 01
