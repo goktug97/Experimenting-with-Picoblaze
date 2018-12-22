@@ -4,6 +4,7 @@ module vernam (
   input clk
 );
 
+wire pb1_interrupt_dff_q;
 // Picoblaze 1
 wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
@@ -97,7 +98,6 @@ MUX mux (
 
 // Picoblaze 1 Interrupt D Flip Flop
 wire pb1_interrupt_dff_d;
-wire pb1_interrupt_dff_q;
 wire pb1_interrupt_dff_set;
 wire pb1_interrupt_dff_reset;
 
