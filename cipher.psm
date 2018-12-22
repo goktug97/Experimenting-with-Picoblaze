@@ -1,18 +1,20 @@
-loop:
-    input sA, 40
-    test sA, FF
-    jump nz, main 
-    test sA, FF
-    jump nz, main 
-    jump loop
+; port_id[7] mux select
+; port_id[0] ram addr
+; port_id[1] ram ena
+; port_id[2] ram we
+; port_id[3] interrupt picoblaze2
 
-main:
-    input s1, 80
-    load sF, sF
-    load sF, sF
-    input s0, 04
-    load sF, sF
-    load sF, sF
-    xor s0, s1
-    output s0, C7
-    jump loop
+loop:
+  jump loop
+
+isr:
+  disable interrupt
+  input s0, 00
+  input s1, 10000010'b
+  xor s0, s1
+  output s0, 00001111'b
+  returni enable
+
+address 3FF
+jump isr
+

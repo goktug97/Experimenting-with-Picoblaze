@@ -3,7 +3,14 @@
 load sA, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
-main:
+startup:
+  CALL random_stream
+  jump loop
+
+loop:
+  jump loop
+
+random_stream:
   load sC, sA
   load s9, sA
 
@@ -27,13 +34,12 @@ main:
     jump C, do_while_loop
   
   or sA, s9
-  output sA, FF
-  load sC, sC
-  jump loop
+  output sA, 01
+  return
 
-loop:
-  ;TEST sF, 11000111'b
-  input sF, FF
-  TEST sF, C7
-  jump nz, main
-  jump loop
+isr:
+  CALL random_stream
+  returni enable
+
+address 3FF
+jump isr

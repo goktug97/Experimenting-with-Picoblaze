@@ -2,7 +2,6 @@
 
 module vernam (
   input clk,
-  output [7:0] out
 );
 
 // Picoblaze 1
@@ -16,11 +15,6 @@ wire pb1_read_strobe;
 wire pb1_interrupt;
 wire pb1_interrupt_ack;
 wire pb1_reset;
-
-assign pb1_interrupt = 0;
-assign pb1_reset = 0;
-
-assign out = pb1_out_port;
 
 cipher pb1_cipher (
   .address(pb1_address),
@@ -54,16 +48,12 @@ wire pb2_interrupt;
 wire pb2_interrupt_ack;
 wire pb2_reset;
 
-assign pb2_interrupt = 0;
-assign pb2_reset = 0;
-
 random pb2_random (
   .address(pb2_address),
   .clk(clk),
   .instruction(pb2_instructions)
 );
 
-assign pb2_in_port = pb1_port_id ;
 kcpsm3 picoblaze_2(
   .address(pb2_address),
   .instruction(pb2_instructions),
@@ -80,62 +70,148 @@ kcpsm3 picoblaze_2(
 
 // RAM
 wire [7:0] ram_output;
+wire [7:0] ram_input;
+wire [7:0] ram_enable;
+wire [7:0] ram_write_enable;
+wire [7:0] ram_address;
 blk_mem_gen_v7_3 ram (
   .clka(clk),
-  .ena(pb1_port_id[2]),
-  .wea(pb1_port_id[1]),
-  .addra(pb1_port_id[0]),
-  .dina(pb1_out_port),
+  .ena(ram_enable),
+  .wea(ram_write_enable),
+  .addra(ram_address),
+  .dina(ram_input),
   .douta(ram_output)
 );
 
 // MUX 
-wire [7:0] pb1_in_register;
-reg [7:0] in0_register;
-reg [7:0] in1_register;
-reg [7:0] in2_register;
-reg [7:0] in3_register;
-
+wire mux_select;
+wire [7:0] mux_input_0;
+wire [7:0] mux_input_1;
+wire [7:0] mux_output;
 MUX mux (
-  .sel(pb1_port_id[7:6]),
-  .in0(in0_register),
-  .in1(in1_register),
-  .in2(in2_register),
-  .in3(in3_register), 
-  .out(pb1_in_register)
+  .sel(mux_select),
+  .in0(mux_input_0),
+  .in1(mux_input_1),
+  .out(mux_output)
 );
 
-always @ (posedge clk) begin
-  pb1_in_port <= pb1_in_register;
-  in0_register <= ram_output;
-  in1_register <= pb2_port_id;
-  in2_register <= pb2_out_port;
-  in3_register <= 8'b00000000;
-end
+// Picoblaze 1 Interrupt D Flip Flop
+wire pb1_interrupt_dff_d;
+wire pb1_interrupt_dff_q;
+wire pb1_interrupt_dff_set;
+wire pb1_interrupt_dff_reset;
 
+DFF_1 pb1_interrupt_dff (
+  .D(pb1_interrupt_dff_d),
+  .Q(pb1_interrupt_dff_q),
+  .set(pb1_interrupt_dff_set),
+  .reset(pb1_interrupt_dff_reset),
+  .clk(clk)
+);
+
+// Picoblaze 2 Interrupt D Flip Flop
+wire pb2_interrupt_dff_d;
+wire pb2_interrupt_dff_q;
+wire pb2_interrupt_dff_set;
+wire pb2_interrupt_dff_reset;
+
+DFF_1 pb2_interrupt_dff (
+  .D(pb2_interrupt_dff_d),
+  .Q(pb2_interrupt_dff_q),
+  .set(pb2_interrupt_dff_set),
+  .reset(pb2_interrupt_dff_reset),
+  .clk(clk)
+);
+
+// Picoblaze 1 Output D Flip Flop
+wire [7:0] pb1_output_dff_d;
+wire [7:0] pb1_output_dff_q;
+wire pb1_output_dff_en;
+
+DFF_2 pb1_output_dff (
+  .D(pb1_output_dff_d),
+  .Q(pb1_output_dff_q),
+  .enable(pb1_output_dff_en),
+  .clk(clk)
+);
+
+// Picoblaze 2 Output D Flip Flop
+wire [7:0] pb2_output_dff_d;
+wire [7:0] pb2_output_dff_q;
+wire pb2_output_dff_en;
+
+DFF_2 pb2_output_dff (
+  .D(pb2_output_dff_d),
+  .Q(pb2_output_dff_q),
+  .enable(pb2_output_dff_en),
+  .clk(clk)
+);
+
+//WIRING
+
+assign pb1_interrupt_dff_d = 1;
+assign pb1_interrupt_dff_set = pb2_write_strobe & pb2_port_id[0];
+assign pb1_interrupt_dff_reset = pb1_interrupt_ack;
+assign pb1_interrupt = pb1_interrupt_dff_q;
+
+assign ram_address = pb1_port_id[0];
+assign ram_enable = pb1_port_id[1];
+assign ram_write_enable = pb1_port_id[2];
+
+assign pb1_output_dff_d = pb1_out_port;
+assign pb1_output_dff_en = pb1_port_id[3] & pb1_write_strobe;
+assign ram_input = pb1_output_dff_q;
+
+assign pb2_output_dff_d = pb2_out_port;
+assign pb2_output_dff_en = pb2_write_strobe & pb2_port_id[0];
+assign mux_input_0 = pb2_output_dff_q;
+assign mux_input_1 = ram_output;
+assign pb1_in_port = mux_output;
+assign mux_select = pb1_port_id[7];
+
+assign pb2_interrupt_dff_set = pb1_write_strobe & pb1_port_id[3];
+assign pb2_interrupt_dff_d = 1;
+assign pb2_interrupt = pb2_interrupt_dff_q;
+assign pb2_interrupt_dff_reset = interrupt_ack;
 
 endmodule
 
+// HELPER MODULES
 module MUX(
-  sel,
-  in0,
-  in1,
-  in2,
-  in3,
-  out
+  input sel,
+  input [7:0] in0,
+  input [7:0] in1,
+  output [7:0] out
 );
 
-input [1:0] sel;
-input [7:0] in0;
-input [7:0] in1;
-input [7:0] in2;
-input [7:0] in3;
+assign out = sel == 0 ? in0 :
+             sel == 1 ? in1 : 8'bxxxxxxxx;
 
-output [7:0] out;
+endmodule
 
-assign out = sel == 00 ? in0 :
-             sel == 01 ? in1 :
-             sel == 10 ? in2 :
-             sel == 11 ? in3 : 8'bxxxxxxxx;
+module DFF_1 (
+  input D,
+  output Q,
+  input set,
+  input reset,
+  input clk
+);
+
+always @ (posedge clk) begin
+  if (reset) Q <= 0;
+  else if (set) Q <= D;
+end
+
+endmodule
+
+module DFF_2 (
+  input [7:0] D,
+  output [7:0] Q,
+  input enable,
+  input clk
+);
+
+always @ (posedge clk)
+  if (enable) Q <= D;
 
 endmodule
