@@ -1,10 +1,9 @@
 `timescale 1 ps / 1ps
 
 module vernam (
-  clk
+  input clk,
+  output out
 );
-
-input clk;
 
 // Picoblaze 1
 wire [9:0] pb1_address;
@@ -17,6 +16,8 @@ wire pb1_read_strobe;
 wire pb1_interrupt;
 wire pb1_interrupt_ack;
 wire pb1_reset;
+
+assign out = pb1_out_port;
 
 cipher pb1_cipher (
   .address(pb1_address),
