@@ -92,7 +92,7 @@ wire [7:0] mux_output;
 MUX mux (
   .sel(mux_select),
   .in0(mux_input_0),
-  .in1(mux_input_1),
+  .in1(ram_output),
   .out(mux_output)
 );
 

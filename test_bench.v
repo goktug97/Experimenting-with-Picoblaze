@@ -11,7 +11,7 @@ vernam vernam_module (
 initial clk = 0;
 
 always begin
-  #100000 clk = ~clk;
+  #10000 clk = ~clk;
 end
 
 endmodule

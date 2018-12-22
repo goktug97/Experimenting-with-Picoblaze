@@ -4,6 +4,8 @@
 ; port_id[2] ram we
 ; port_id[3] interrupt picoblaze2
 
+enable interrupt
+
 loop:
   jump loop
 
