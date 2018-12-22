@@ -38,6 +38,7 @@ random_stream:
   return
 
 isr:
+  disable interrupt
   CALL random_stream
   returni enable
 
