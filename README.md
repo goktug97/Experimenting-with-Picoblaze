@@ -19,3 +19,9 @@
 ## FPGA
 
 * Syntesizes succesfully for xc3s50-5pq208 Spartan 3
+
+## RAM
+
+* Write depth: 2    
+* read-write width: 8
+* using ram.coe
