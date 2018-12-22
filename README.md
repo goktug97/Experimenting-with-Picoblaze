@@ -15,3 +15,7 @@
 
 * Clean everything
     * make clean
+
+## FPGA
+
+* Syntesizes succesfully for xc3s50-5pq208 Spartan 3
