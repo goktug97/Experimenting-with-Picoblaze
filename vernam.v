@@ -12,7 +12,7 @@ wire [7:0] pb1_out_port;
 wire [7:0] pb1_in_port;
 wire pb1_write_strobe;
 wire pb1_read_strobe;
-wire pb1_interrupt;
+reg pb1_interrupt;
 wire pb1_interrupt_ack;
 wire pb1_reset;
 
