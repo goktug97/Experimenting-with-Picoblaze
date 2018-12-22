@@ -76,9 +76,9 @@ kcpsm3 picoblaze_2(
 wire [7:0] ram_output;
 blk_mem_gen_v7_3 ram (
   .clka(clk),
-  .ena(pb1_port_id[5]),
-  .wea(pb1_port_id[6]),
-  .addra(pb1_port_id[7]),
+  .ena(pb1_port_id[2]),
+  .wea(pb1_port_id[1]),
+  .addra(pb1_port_id[0]),
   .dina(pb1_out_port),
   .douta(ram_output)
 );
@@ -90,7 +90,7 @@ reg [7:0] in2_register;
 reg [7:0] in3_register;
 wire [7:0] pb1_in_register;
 MUX mux (
-  .sel(pb1_port_id[1:0]),
+  .sel(pb1_port_id[7:6]),
   .in0(in0_register),
   .in1(in1_register),
   .in2(in2_register),
