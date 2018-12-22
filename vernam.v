@@ -10,12 +10,15 @@ wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
 wire [7:0] pb1_port_id;
 wire [7:0] pb1_out_port;
-reg [7:0] pb1_in_port;
+wire [7:0] pb1_in_port;
 wire pb1_write_strobe;
 wire pb1_read_strobe;
 wire pb1_interrupt;
 wire pb1_interrupt_ack;
 wire pb1_reset;
+
+assign pb1_interrupt = 0;
+assign pb1_reset = 0;
 
 assign out = pb1_out_port;
 
@@ -50,6 +53,9 @@ wire pb2_read_strobe;
 wire pb2_interrupt;
 wire pb2_interrupt_ack;
 wire pb2_reset;
+
+assign pb2_interrupt = 0;
+assign pb2_reset = 0;
 
 random pb2_random (
   .address(pb2_address),
@@ -89,26 +95,28 @@ reg [7:0] in0_register;
 reg [7:0] in1_register;
 reg [7:0] in2_register;
 reg [7:0] in3_register;
+
+/*
 MUX mux (
   .sel(pb1_port_id[7:6]),
   .in0(in0_register),
   .in1(in1_register),
   .in2(in2_register),
   .in3(in3_register), 
-  .out(pb1_in_register)
+  .out(pb1_in_port)
 );
+*/
 
-/*
 MUX mux (
   .sel(pb1_port_id[7:6]),
   .in0(ram_output),
   .in1(pb2_port_id),
   .in2(pb2_out_port),
   .in3(8'b00000000), 
-  .out(pb1_in_register)
+  .out(pb1_in_port)
 );
-*/
 
+/*
 always @ (posedge clk) begin
   pb1_in_port <= pb1_in_register;
   in0_register <= ram_output;
@@ -116,6 +124,7 @@ always @ (posedge clk) begin
   in2_register <= pb2_out_port;
   in3_register <= 8'b00000000;
 end
+*/
 
 
 endmodule

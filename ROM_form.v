@@ -94,7 +94,6 @@ The next line is used to determine where the template actually starts and must e
 //Command: kcpsm3 {name}.psm
 //Device: Spartan-3, Spartan-3E, Virtex-II, and Virtex-II Pro FPGAs
 //Design Name: {name}
-//Generated {timestamp}.
 //Purpose:
 //	{name} verilog program definition.
 //

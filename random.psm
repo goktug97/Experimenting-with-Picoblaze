@@ -13,14 +13,11 @@ main:
   CALL random_stream
   output lfsr, FF
   load temp, temp
-  load temp, temp
   jump loop
 
 loop:
   ;TEST sF, 11000111'b
   input sF, FF
-  TEST sF, C7
-  jump nz, main
   TEST sF, C7
   jump nz, main
   jump loop

@@ -15,7 +15,6 @@
 //Command: kcpsm3 cipher.psm
 //Device: Spartan-3, Spartan-3E, Virtex-II, and Virtex-II Pro FPGAs
 //Design Name: cipher
-//Generated 2018-12-22T14:15:25.
 //Purpose:
 //	cipher verilog program definition.
 //
