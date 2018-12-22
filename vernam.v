@@ -30,7 +30,7 @@ kcpsm3 picoblaze_1(
   .out_port(pb1_out_port),
   .read_strobe(pb1_read_strobe),
   .in_port(pb1_in_port),
-  .interrupt(pb1_interrupt),
+  .interrupt(pb1_interrupt_dff_q),
   .interrupt_ack(pb1_interrupt_ack),
   .reset(pb1_reset),
   .clk(clk)
