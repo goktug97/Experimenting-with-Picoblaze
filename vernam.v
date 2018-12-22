@@ -71,9 +71,9 @@ kcpsm3 picoblaze_2(
 // RAM
 wire [7:0] ram_output;
 wire [7:0] ram_input;
-wire [7:0] ram_enable;
-wire [7:0] ram_write_enable;
-wire [7:0] ram_address;
+wire ram_enable;
+wire [0:0] ram_write_enable;
+wire [0:0] ram_address;
 blk_mem_gen_v7_3 ram (
   .clka(clk),
   .ena(ram_enable),
