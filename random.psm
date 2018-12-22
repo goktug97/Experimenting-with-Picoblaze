@@ -1,5 +1,8 @@
 ;random init
 ;load sA, 00110100'b
+constant interrupt_pb1, 01
+default_jump loop
+
 load sA, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
@@ -26,7 +29,7 @@ do_while_loop:
   jump C, do_while_loop
 
 or sA, s9
-output sA, 01
+output sA, interrupt_pb1
 
 loop:
 jump loop
