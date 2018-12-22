@@ -5,6 +5,7 @@ module vernam (
 );
 
 wire pb1_interrupt_dff_q;
+wire pb2_interrupt_dff_q;
 // Picoblaze 1
 wire [9:0] pb1_address;
 wire [17:0] pb1_instructions;
@@ -63,7 +64,7 @@ kcpsm3 picoblaze_2(
   .out_port(pb2_out_port),
   .read_strobe(pb2_read_strobe),
   .in_port(pb2_in_port),
-  .interrupt(pb2_interrupt),
+  .interrupt(pb2_interrupt_dff_q),
   .interrupt_ack(pb2_interrupt_ack),
   .reset(pb2_reset),
   .clk(clk)
@@ -109,6 +110,19 @@ DFF_1 pb1_interrupt_dff (
   .clk(clk)
 );
 
+// Picoblaze 2 Interrupt D Flip Flop
+wire pb2_interrupt_dff_d;
+wire pb2_interrupt_dff_set;
+wire pb2_interrupt_dff_reset;
+
+DFF_1 pb2_interrupt_dff (
+  .D(pb2_interrupt_dff_d),
+  .Q(pb2_interrupt_dff_q),
+  .set(pb2_interrupt_dff_set),
+  .reset(pb2_interrupt_ack),
+  .clk(clk)
+);
+
 // Picoblaze 1 Output D Flip Flop
 wire [7:0] pb1_output_dff_d;
 wire [7:0] pb1_output_dff_q;
@@ -140,9 +154,14 @@ assign pb1_interrupt_dff_set = pb2_write_strobe & pb2_port_id[0];
 assign pb1_interrupt_dff_reset = pb1_interrupt_ack;
 assign pb1_interrupt = pb1_interrupt_dff_q;
 
+assign pb2_interrupt_dff_d = 1;
+assign pb2_interrupt_dff_set = pb1_write_strobe & pb1_port_id[3];
+assign pb2_interrupt_dff_reset = pb2_interrupt_ack;
+assign pb2_interrupt = pb2_interrupt_dff_q;
 assign ram_address = pb1_port_id[0];
-assign ram_enable = pb1_port_id[1];
-assign ram_write_enable = pb1_port_id[2];
+
+assign ram_enable = pb1_port_id[3] & pb1_write_strobe;
+assign ram_write_enable = pb1_port_id[3] & pb1_write_strobe;
 
 assign pb1_output_dff_d = pb1_out_port;
 assign pb1_output_dff_en = pb1_port_id[3] & pb1_write_strobe;

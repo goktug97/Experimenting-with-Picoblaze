@@ -6,30 +6,44 @@ default_jump loop
 load sA, 34
 ; x^8 + x^6 + x^5 + x^4 + 1
 
-load sC, sA
-load s9, sA
-
-sr0 sC
-sr0 sC
-xor s9, sC
-sr0 sC
-xor s9, sC
-sr0 sC
-xor s9, sC
-and s9, 01
-
-sr0 sA
-
-load sB, 00
-
-do_while_loop:
-  sl0 s9
-  add sB, 01
-  compare sB, 07
-  jump C, do_while_loop
-
-or sA, s9
-output sA, interrupt_pb1
+main:
+  call random_stream
+  enable interrupt
 
 loop:
-jump loop
+  jump loop
+
+isr:
+  disable interrupt
+  call random_stream
+  returni enable
+
+random_stream:
+  load sC, sA
+  load s9, sA
+
+  sr0 sC
+  sr0 sC
+  xor s9, sC
+  sr0 sC
+  xor s9, sC
+  sr0 sC
+  xor s9, sC
+  and s9, 01
+
+  sr0 sA
+
+  load sB, 00
+
+  do_while_loop:
+    sl0 s9
+    add sB, 01
+    compare sB, 07
+    jump C, do_while_loop
+
+  or sA, s9
+  output sA, interrupt_pb1
+  return
+
+address 3FF
+  jump isr
