@@ -85,7 +85,6 @@ blk_mem_gen_v7_3 ram (
 
 // MUX 
 wire [7:0] pb1_in_register;
-/*
 reg [7:0] in0_register;
 reg [7:0] in1_register;
 reg [7:0] in2_register;
@@ -98,8 +97,8 @@ MUX mux (
   .in3(in3_register), 
   .out(pb1_in_register)
 );
-*/
 
+/*
 MUX mux (
   .sel(pb1_port_id[7:6]),
   .in0(ram_output),
@@ -108,15 +107,14 @@ MUX mux (
   .in3(8'b00000000), 
   .out(pb1_in_register)
 );
+*/
 
 always @ (posedge clk) begin
   pb1_in_port <= pb1_in_register;
-/*
   in0_register <= ram_output;
   in1_register <= pb2_port_id;
   in2_register <= pb2_out_port;
   in3_register <= 8'b00000000;
-*/
 end
 
 
