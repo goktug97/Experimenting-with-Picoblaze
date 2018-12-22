@@ -12,6 +12,8 @@ load lfsr, 34
 main:
   CALL random_stream
   output lfsr, FF
+  load temp, temp
+  load temp, temp
   jump loop
 
 loop:
