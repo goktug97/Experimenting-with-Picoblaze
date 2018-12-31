@@ -34,4 +34,4 @@ Picoblaze 1 reads message from RAMs 0th address and crypts it with random stream
 
 ## Simulation
 
-![alt text](https://github.com/goktug97/Experimenting-with-Picoblaze/blob/master/simulation.png)
+![Simulation](https://github.com/goktug97/Experimenting-with-Picoblaze/blob/master/simulation.png)
