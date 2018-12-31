@@ -22,8 +22,7 @@ Picoblaze 1 reads message from RAMs 0th address and crypts it with random stream
 
 ## FPGA
 
-* Don't include ROM\_form.v, other verilog files should be added as source files except test\_bench.v, it should be added
-as simulation file.
+* Don't include ROM\_form.v, other verilog files should be added as source files except test\_bench.v, it should be added as simulation file.
 
 * Syntesizes succesfully for xc3s50-5pq208 Spartan 3
 
@@ -32,3 +31,7 @@ as simulation file.
 * Write depth: 2    
 * read-write width: 8
 * using ram.coe
+
+## Simulation
+
+![alt text](https://github.com/goktug97/Experimenting-with-Picoblaze/blob/master/simulation.png)
